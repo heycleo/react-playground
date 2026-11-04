@@ -1,5 +1,15 @@
+import { Route, Routes } from "react-router";
+import Layout from "./components/layout/layout";
+import Home from "./pages/home";
+
 function App() {
-  return <h1>React Playground.</h1>;
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;
