@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { cn } from "cn";
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
 
 type TodoItem = {
@@ -32,7 +34,7 @@ function TodoList() {
       ),
     );
   }
-  function deleteItem(id: number) {
+  function handleDelete(id: number) {
     setList((prev) => prev.filter((item) => item.id !== id));
   }
 
@@ -44,7 +46,7 @@ function TodoList() {
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <div className="flex justify-end">{uncompletedCount} tasks remaining</div>
+      {list.length > 0 && <div>{uncompletedCount} tasks remaining</div>}
       {list.length === 0 ? (
         <div>No task yet.</div>
       ) : (
@@ -58,12 +60,16 @@ function TodoList() {
               />
               <FieldLabel
                 htmlFor={`todo-${item.id}`}
-                className={item.completed && "line-through"}
+                className={cn(item.completed && "line-through")}
               >
                 {item.text}
               </FieldLabel>
-              <Button variant="ghost" onClick={() => deleteItem(item.id)}>
-                delete
+              <Button
+                variant="ghost"
+                onClick={() => handleDelete(item.id)}
+                aria-label={`Delete ${item.text}`}
+              >
+                <Trash2 />
               </Button>
             </Field>
           ))}
